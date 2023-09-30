@@ -1,2 +1,2 @@
-../Src/main.c:35:5:main	8	static
-../Src/main.c:58:6:TIM16_IRQHandler	8	static
+../Src/main.c:38:5:main	8	static
+../Src/main.c:65:6:TIM16_IRQHandler	8	static

@@ -31,6 +31,9 @@
 #define MY_UART2_BAUDRATE	(uint32_t)115200
 
 uint8_t my_tim16_up = 0 ;
+uint8_t A = 0x41 ;
+uint8_t rx_byte_from_uart2 = 0x00 ;
+uint8_t tx_byte_to_uart2 = 0x41 ;
 
 int main(void)
 {
@@ -46,11 +49,15 @@ int main(void)
 /* Loop forever */
 	while ( 1 )
 	{
+		rx_byte_from_uart2 = rx_byte_my_uart2 () ;
+		tx_byte_to_uart2 = rx_byte_from_uart2 ? rx_byte_from_uart2 : tx_byte_to_uart2 ;
 		if ( my_tim16_up == 1)
 		{
 			my_tim16_up = 0 ;
 			if ( USART2->ISR & USART_ISR_TXE_TXFNF )
-				USART2->TDR = 0x41 ;
+			{
+				USART2->TDR = tx_byte_to_uart2 ;
+			}
 		}
 	}
 }
