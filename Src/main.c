@@ -26,9 +26,9 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-#define MY_G031_SYSCLOCK	(uint16_t) 16000000
-#define MY_UART1_BAUDRATE	(uint16_t) 9600
-#define MY_UART2_BAUDRATE	(uint16_t) 115200
+#define MY_G031_SYSCLOCK	(uint32_t) 16000000
+#define MY_UART1_BAUDRATE	(uint32_t) 9600
+#define MY_UART2_BAUDRATE	(uint32_t)115200
 
 uint8_t my_tim16_up = 0 ;
 

@@ -11,8 +11,8 @@
 #include "stm32g031xx.h"
 
 void my_uart1_init ( void ) ;
-void my_uart1_on ( uint16_t , uint16_t ) ;
+void my_uart1_on ( uint32_t , uint32_t ) ;
 void my_uart2_init ( void ) ;
-void my_uart2_on ( uint16_t , uint16_t ) ;
+void my_uart2_on ( uint32_t , uint32_t ) ;
 
 #endif /* MY_UART_H_ */
