@@ -1,0 +1,4 @@
+../my_drivers/Src/my_uart.c:17:6:my_uart1_init	8	static
+../my_drivers/Src/my_uart.c:26:6:my_uart1_on	16	static
+../my_drivers/Src/my_uart.c:36:6:my_uart2_init	8	static
+../my_drivers/Src/my_uart.c:46:6:my_uart2_on	16	static
