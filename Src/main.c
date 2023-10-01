@@ -30,8 +30,9 @@
 #define MY_UART1_BAUDRATE	(uint32_t) 9600
 #define MY_UART2_BAUDRATE	(uint32_t) 115200
 
-uint8_t my_tim16_up = 0 ;
-uint8_t rx_byte_uart1 = 0x00 ;
+uint8_t my_tim16_up ;
+uint8_t rx_byte_uart1 ;
+
 
 int main(void)
 {
@@ -49,6 +50,8 @@ int main(void)
 		;
 	}
 	USART1->TDR = '@' ; // TX test
+	rx_byte_uart1 = 0x00 ;
+	my_tim16_up = 0 ;
 	//config_my_tim16 ( MY_G031_SYSCLOCK ) ;
 	//start_my_tim16 ( (uint16_t) 1000 ) ;
 	/* Loop forever */

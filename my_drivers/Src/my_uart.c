@@ -20,6 +20,7 @@ void my_uart1_init ( void )
 	GPIOB->MODER 	&= ~GPIO_MODER_MODE6_0 ; 	// Set Alternate Function (AF) for USART1_TX
 	GPIOB->MODER 	&= ~GPIO_MODER_MODE7_0 ; 	// Set Alternate Function (AF) for USART1_RX
 	//GPIOB->OTYPER	|= GPIO_OTYPER_OT7 ; 		// Choose Open_drain for RX to avoid P-MOS transistors problems and assuming push-pull expected on device
+	GPIOB->PUPDR	|= GPIO_PUPDR_PUPD6_0 ;		// Tx Pull-up
 	GPIOB->PUPDR	|= GPIO_PUPDR_PUPD7_0 ;		// Rx Pull-up
 }
 
@@ -44,6 +45,8 @@ void my_uart2_init ( void )
 	GPIOA->AFR[0]	|= GPIO_AFRL_AFSEL2_0 ;  	// ALERT! AFRL is AFR[0]. Choose AF1
 	GPIOA->AFR[0]	|= GPIO_AFRL_AFSEL3_0 ;  	// ALERT! AFRL is AFR[0]. Choose AF1
 	//GPIOA->OTYPER	|= GPIO_OTYPER_OT3 ; 		// Choose Open_drain for RX to avoid P-MOS transistors problems and assuming push-pull expected on device
+	GPIOA->PUPDR	|= GPIO_PUPDR_PUPD2_0 ;		// Tx Pull-up
+	GPIOA->PUPDR	|= GPIO_PUPDR_PUPD3_0 ;		// Rx Pull-up
 }
 
 void rx_byte_my_uart1 ( uint8_t* rx_byte )
@@ -51,6 +54,10 @@ void rx_byte_my_uart1 ( uint8_t* rx_byte )
 	if ( USART1->ISR & USART_ISR_RXNE_RXFNE )
 	{
 		*rx_byte = USART1->RDR ;
+	}
+	else
+	{
+		__NOP() ;
 	}
 }
 
