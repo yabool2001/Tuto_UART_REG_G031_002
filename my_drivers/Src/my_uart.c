@@ -53,7 +53,7 @@ void rx_byte_my_uart1 ( uint8_t* rx_byte )
 {
 	if ( USART1->ISR & USART_ISR_RXNE_RXFNE )
 	{
-		*rx_byte = USART1->RDR ;
+		rx_byte[0] = USART1->RDR ;
 	}
 	else
 	{
@@ -65,7 +65,7 @@ void rx_byte_my_uart2 ( uint8_t* rx_byte )
 {
 	if ( USART2->ISR & USART_ISR_RXNE_RXFNE )
 	{
-		*rx_byte = USART2->RDR ;
+		rx_byte[0] = USART2->RDR ;
 	}
 }
 
@@ -73,7 +73,7 @@ void tx_byte_my_uart1 ( uint8_t* tx_byte )
 {
 	if ( USART1->ISR & USART_ISR_TXE_TXFNF )
 	{
-		USART1->TDR = *tx_byte ;
+		USART1->TDR = tx_byte[0] ;
 	}
 }
 
@@ -81,7 +81,7 @@ void tx_byte_my_uart2 ( uint8_t* tx_byte )
 {
 	if ( USART2->ISR & USART_ISR_TXE_TXFNF )
 	{
-		USART2->TDR = *tx_byte ;
+		USART2->TDR = tx_byte[0] ;
 	}
 }
 
