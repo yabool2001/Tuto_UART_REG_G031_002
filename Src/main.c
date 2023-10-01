@@ -27,7 +27,7 @@
 #endif
 
 #define MY_G031_SYSCLOCK	(uint32_t) 16000000
-#define MY_UART1_BAUDRATE	(uint32_t) 115200
+#define MY_UART1_BAUDRATE	(uint32_t) 9600
 #define MY_UART2_BAUDRATE	(uint32_t) 115200
 
 uint8_t my_tim16_up = 0 ;
@@ -40,7 +40,7 @@ int main(void)
 	my_uart2_init () ;
 	my_uart2_on ( MY_G031_SYSCLOCK , MY_UART2_BAUDRATE ) ;
 	my_uart1_init () ;
-	my_uart1_on ( MY_G031_SYSCLOCK , MY_UART1_BAUDRATE ) ;
+	my_uart1_on ( MY_G031_SYSCLOCK , MY_UART2_BAUDRATE ) ;
 	while ( !( USART2->ISR & USART_ISR_TXE_TXFNF ) )
 	{
 		;
@@ -56,26 +56,17 @@ int main(void)
 	/* Loop forever */
 	while ( 1 )
 	{
-		rx_byte_uart1 = rx_byte_my_uart2 () ;
+		rx_byte_uart1 = rx_byte_my_uart1 () ;
 		if ( rx_byte_uart1 )
 		{
 			tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
-			/*
-			if ( USART1->ISR & USART_ISR_TXE_TXFNF )
-			{
-				USART1->TDR = rx_byte_uart1 ;
-			}
-			*/
 		}
 		/*
 		tx_byte_to_uart2 = rx_byte_from_uart2 ? rx_byte_from_uart2 : tx_byte_to_uart2 ;
 		if ( my_tim16_up == 1)
 		{
 			my_tim16_up = 0 ;
-			if ( USART2->ISR & USART_ISR_TXE_TXFNF )
-			{
-				USART2->TDR = tx_byte_to_uart2 ;
-			}
+			tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
 		}
 		*/
 	}

@@ -359,7 +359,7 @@ Discarded input sections
  .text          0x0000000000000000        0x0 ./my_drivers/Src/my_uart.o
  .data          0x0000000000000000        0x0 ./my_drivers/Src/my_uart.o
  .bss           0x0000000000000000        0x0 ./my_drivers/Src/my_uart.o
- .text.rx_byte_my_uart1
+ .text.rx_byte_my_uart2
                 0x0000000000000000       0x30 ./my_drivers/Src/my_uart.o
  .text.tx_byte_my_uart1
                 0x0000000000000000       0x28 ./my_drivers/Src/my_uart.o
@@ -721,9 +721,9 @@ LOAD C:/ST/STM32CubeIDE_1.13.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .text.my_uart2_init
                 0x0000000008000388       0x70 ./my_drivers/Src/my_uart.o
                 0x0000000008000388                my_uart2_init
- .text.rx_byte_my_uart2
+ .text.rx_byte_my_uart1
                 0x00000000080003f8       0x30 ./my_drivers/Src/my_uart.o
-                0x00000000080003f8                rx_byte_my_uart2
+                0x00000000080003f8                rx_byte_my_uart1
  .text.tx_byte_my_uart2
                 0x0000000008000428       0x28 ./my_drivers/Src/my_uart.o
                 0x0000000008000428                tx_byte_my_uart2
@@ -940,12 +940,12 @@ LOAD C:/ST/STM32CubeIDE_1.13.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_line    0x00000000000005d1       0x7b ./Startup/startup_stm32g031k8tx.o
  .debug_line    0x000000000000064c      0x67d ./my_drivers/Src/my_uart.o
 
-.debug_str      0x0000000000000000    0x44a16
- .debug_str     0x0000000000000000    0x4488f ./Src/main.o
-                                      0x44a25 (size before relaxing)
- .debug_str     0x000000000004488f       0x2f ./Startup/startup_stm32g031k8tx.o
+.debug_str      0x0000000000000000    0x44a14
+ .debug_str     0x0000000000000000    0x4488d ./Src/main.o
+                                      0x44a23 (size before relaxing)
+ .debug_str     0x000000000004488d       0x2f ./Startup/startup_stm32g031k8tx.o
                                          0x64 (size before relaxing)
- .debug_str     0x00000000000448be      0x158 ./my_drivers/Src/my_uart.o
+ .debug_str     0x00000000000448bc      0x158 ./my_drivers/Src/my_uart.o
                                       0x44a68 (size before relaxing)
 
 .debug_frame    0x0000000000000000      0x19c

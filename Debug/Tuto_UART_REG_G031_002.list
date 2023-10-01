@@ -41,11 +41,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  18 .debug_line   00000cc9  00000000  00000000  0001d51b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    00044a16  00000000  00000000  0001e1e4  2**0
+ 19 .debug_str    00044a14  00000000  00000000  0001e1e4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  0000019c  00000000  00000000  00062bfc  2**2
+ 20 .debug_frame  0000019c  00000000  00000000  00062bf8  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000058  00000000  00000000  00062d98  2**0
+ 21 .debug_line_str 00000058  00000000  00000000  00062d94  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -249,7 +249,7 @@ int main(void)
  8000232:	f000 f941 	bl	80004b8 <my_uart2_on>
 	my_uart1_init () ;
  8000236:	f000 f86d 	bl	8000314 <my_uart1_init>
-	my_uart1_on ( MY_G031_SYSCLOCK , MY_UART1_BAUDRATE ) ;
+	my_uart1_on ( MY_G031_SYSCLOCK , MY_UART2_BAUDRATE ) ;
  800023a:	23e1      	movs	r3, #225	; 0xe1
  800023c:	025b      	lsls	r3, r3, #9
  800023e:	4a13      	ldr	r2, [pc, #76]	; (800028c <main+0x6c>)
@@ -289,8 +289,8 @@ int main(void)
 	/* Loop forever */
 	while ( 1 )
 	{
-		rx_byte_uart1 = rx_byte_my_uart2 () ;
- 800026c:	f000 f8c4 	bl	80003f8 <rx_byte_my_uart2>
+		rx_byte_uart1 = rx_byte_my_uart1 () ;
+ 800026c:	f000 f8c4 	bl	80003f8 <rx_byte_my_uart1>
  8000270:	0003      	movs	r3, r0
  8000272:	001a      	movs	r2, r3
  8000274:	4b08      	ldr	r3, [pc, #32]	; (8000298 <main+0x78>)
@@ -305,7 +305,7 @@ int main(void)
  8000280:	4b05      	ldr	r3, [pc, #20]	; (8000298 <main+0x78>)
  8000282:	0018      	movs	r0, r3
  8000284:	f000 f8d0 	bl	8000428 <tx_byte_my_uart2>
-		rx_byte_uart1 = rx_byte_my_uart2 () ;
+		rx_byte_uart1 = rx_byte_my_uart1 () ;
  8000288:	e7f0      	b.n	800026c <main+0x4c>
  800028a:	46c0      	nop			; (mov r8, r8)
  800028c:	00f42400 	.word	0x00f42400
@@ -585,12 +585,9 @@ void my_uart2_init ( void )
  80003f2:	46c0      	nop			; (mov r8, r8)
  80003f4:	40021000 	.word	0x40021000
 
-080003f8 <rx_byte_my_uart2>:
-	}
-	return rx_byte ;
-}
+080003f8 <rx_byte_my_uart1>:
 
-uint8_t rx_byte_my_uart2 ( void )
+uint8_t rx_byte_my_uart1 ( void )
 {
  80003f8:	b580      	push	{r7, lr}
  80003fa:	b082      	sub	sp, #8
@@ -599,15 +596,15 @@ uint8_t rx_byte_my_uart2 ( void )
  80003fe:	1dfb      	adds	r3, r7, #7
  8000400:	2200      	movs	r2, #0
  8000402:	701a      	strb	r2, [r3, #0]
-	if ( USART2->ISR & USART_ISR_RXNE_RXFNE )
- 8000404:	4b07      	ldr	r3, [pc, #28]	; (8000424 <rx_byte_my_uart2+0x2c>)
+	if ( USART1->ISR & USART_ISR_RXNE_RXFNE )
+ 8000404:	4b07      	ldr	r3, [pc, #28]	; (8000424 <rx_byte_my_uart1+0x2c>)
  8000406:	69db      	ldr	r3, [r3, #28]
  8000408:	2220      	movs	r2, #32
  800040a:	4013      	ands	r3, r2
- 800040c:	d003      	beq.n	8000416 <rx_byte_my_uart2+0x1e>
+ 800040c:	d003      	beq.n	8000416 <rx_byte_my_uart1+0x1e>
 	{
-		rx_byte = USART2->RDR ;
- 800040e:	4b05      	ldr	r3, [pc, #20]	; (8000424 <rx_byte_my_uart2+0x2c>)
+		rx_byte = USART1->RDR ;
+ 800040e:	4b05      	ldr	r3, [pc, #20]	; (8000424 <rx_byte_my_uart1+0x2c>)
  8000410:	6a5a      	ldr	r2, [r3, #36]	; 0x24
  8000412:	1dfb      	adds	r3, r7, #7
  8000414:	701a      	strb	r2, [r3, #0]
@@ -621,7 +618,7 @@ uint8_t rx_byte_my_uart2 ( void )
  800041e:	b002      	add	sp, #8
  8000420:	bd80      	pop	{r7, pc}
  8000422:	46c0      	nop			; (mov r8, r8)
- 8000424:	40004400 	.word	0x40004400
+ 8000424:	40013800 	.word	0x40013800
 
 08000428 <tx_byte_my_uart2>:
 		USART1->TDR = *tx_byte ;
