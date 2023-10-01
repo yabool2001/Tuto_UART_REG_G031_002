@@ -31,7 +31,7 @@
 #define MY_UART2_BAUDRATE	(uint32_t) 115200
 
 uint8_t my_tim16_up ;
-uint8_t rx_byte_uart1[1] ;
+uint8_t rx_byte_uart1 ;
 
 
 int main(void)
@@ -50,18 +50,18 @@ int main(void)
 		;
 	}
 	USART1->TDR = '@' ; // TX test
-	rx_byte_uart1[0] = 0x00 ;
+	rx_byte_uart1 = 0x00 ;
 	my_tim16_up = 0 ;
 	//config_my_tim16 ( MY_G031_SYSCLOCK ) ;
 	//start_my_tim16 ( (uint16_t) 1000 ) ;
 	/* Loop forever */
 	while ( 1 )
 	{
-		rx_byte_my_uart1 ( rx_byte_uart1 ) ;
-		if ( rx_byte_uart1[0] )
+		rx_byte_my_uart1 ( &rx_byte_uart1 ) ;
+		if ( rx_byte_uart1 )
 		{
-			tx_byte_my_uart2 ( rx_byte_uart1 ) ;
-			rx_byte_uart1[0] = 0x00 ;
+			tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
+			rx_byte_uart1 = 0x00 ;
 		}
 		/*
 		tx_byte_to_uart2 = rx_byte_from_uart2 ? rx_byte_from_uart2 : tx_byte_to_uart2 ;

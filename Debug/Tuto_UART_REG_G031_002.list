@@ -21,31 +21,31 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, DATA
   8 .data         00000000  20000000  20000000  0001058c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00000024  20000000  0800058c  00020000  2**2
+  9 .bss          00000020  20000000  0800058c  00020000  2**2
                   ALLOC
- 10 ._user_heap_stack 00000604  20000024  0800058c  00020024  2**0
+ 10 ._user_heap_stack 00000600  20000020  0800058c  00020020  2**0
                   ALLOC
  11 .ARM.attributes 00000028  00000000  00000000  0001058c  2**0
                   CONTENTS, READONLY
  12 .comment      00000043  00000000  00000000  000105b4  2**0
                   CONTENTS, READONLY
- 13 .debug_info   000007ce  00000000  00000000  000105f7  2**0
+ 13 .debug_info   000007be  00000000  00000000  000105f7  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 0000023f  00000000  00000000  00010dc5  2**0
+ 14 .debug_abbrev 0000022d  00000000  00000000  00010db5  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 000000a8  00000000  00000000  00011008  2**3
+ 15 .debug_aranges 000000a8  00000000  00000000  00010fe8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_rnglists 00000071  00000000  00000000  000110b0  2**0
+ 16 .debug_rnglists 00000071  00000000  00000000  00011090  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  0000c3a4  00000000  00000000  00011121  2**0
+ 17 .debug_macro  0000c3a4  00000000  00000000  00011101  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   00000ccf  00000000  00000000  0001d4c5  2**0
+ 18 .debug_line   00000ccf  00000000  00000000  0001d4a5  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    00044a03  00000000  00000000  0001e194  2**0
+ 19 .debug_str    00044a03  00000000  00000000  0001e174  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  0000019c  00000000  00000000  00062b98  2**2
+ 20 .debug_frame  0000019c  00000000  00000000  00062b78  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000058  00000000  00000000  00062d34  2**0
+ 21 .debug_line_str 00000058  00000000  00000000  00062d14  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -231,7 +231,7 @@ Disassembly of section .text:
 
 08000220 <main>:
 uint8_t my_tim16_up ;
-uint8_t rx_byte_uart1[1] ;
+uint8_t rx_byte_uart1 ;
 
 
 int main(void)
@@ -284,7 +284,7 @@ int main(void)
  8000266:	4b0e      	ldr	r3, [pc, #56]	; (80002a0 <main+0x80>)
  8000268:	2240      	movs	r2, #64	; 0x40
  800026a:	629a      	str	r2, [r3, #40]	; 0x28
-	rx_byte_uart1[0] = 0x00 ;
+	rx_byte_uart1 = 0x00 ;
  800026c:	4b0d      	ldr	r3, [pc, #52]	; (80002a4 <main+0x84>)
  800026e:	2200      	movs	r2, #0
  8000270:	701a      	strb	r2, [r3, #0]
@@ -297,30 +297,30 @@ int main(void)
 	/* Loop forever */
 	while ( 1 )
 	{
-		rx_byte_my_uart1 ( rx_byte_uart1 ) ;
+		rx_byte_my_uart1 ( &rx_byte_uart1 ) ;
  8000278:	4b0a      	ldr	r3, [pc, #40]	; (80002a4 <main+0x84>)
  800027a:	0018      	movs	r0, r3
  800027c:	f000 f8c0 	bl	8000400 <rx_byte_my_uart1>
-		if ( rx_byte_uart1[0] )
+		if ( rx_byte_uart1 )
  8000280:	4b08      	ldr	r3, [pc, #32]	; (80002a4 <main+0x84>)
  8000282:	781b      	ldrb	r3, [r3, #0]
  8000284:	2b00      	cmp	r3, #0
  8000286:	d0f7      	beq.n	8000278 <main+0x58>
 		{
-			tx_byte_my_uart2 ( rx_byte_uart1 ) ;
+			tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
  8000288:	4b06      	ldr	r3, [pc, #24]	; (80002a4 <main+0x84>)
  800028a:	0018      	movs	r0, r3
  800028c:	f000 f8ce 	bl	800042c <tx_byte_my_uart2>
-			rx_byte_uart1[0] = 0x00 ;
+			rx_byte_uart1 = 0x00 ;
  8000290:	4b04      	ldr	r3, [pc, #16]	; (80002a4 <main+0x84>)
  8000292:	2200      	movs	r2, #0
  8000294:	701a      	strb	r2, [r3, #0]
-		rx_byte_my_uart1 ( rx_byte_uart1 ) ;
+		rx_byte_my_uart1 ( &rx_byte_uart1 ) ;
  8000296:	e7ef      	b.n	8000278 <main+0x58>
  8000298:	00f42400 	.word	0x00f42400
  800029c:	40004400 	.word	0x40004400
  80002a0:	40013800 	.word	0x40013800
- 80002a4:	20000020 	.word	0x20000020
+ 80002a4:	2000001d 	.word	0x2000001d
  80002a8:	2000001c 	.word	0x2000001c
 
 080002ac <TIM16_IRQHandler>:
@@ -446,7 +446,7 @@ LoopForever:
   ldr r2, =_sbss
  8000318:	20000000 	.word	0x20000000
   ldr r4, =_ebss
- 800031c:	20000024 	.word	0x20000024
+ 800031c:	20000020 	.word	0x20000020
 
 08000320 <ADC_COMP_IRQHandler>:
  * @retval : None
