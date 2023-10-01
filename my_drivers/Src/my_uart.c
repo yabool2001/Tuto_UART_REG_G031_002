@@ -34,14 +34,40 @@ void my_uart2_init ( void )
 	GPIOA->OTYPER	|= GPIO_OTYPER_OT3 ; 		// Choose Open_drain for RX to avoid P-MOS transistors problems and assuming push-pull expected on device
 }
 
+uint8_t rx_byte_my_uart1 ( void )
+{
+	uint8_t rx_byte = 0 ;
+	if ( USART1->ISR & USART_ISR_RXNE_RXFNE )
+	{
+		rx_byte = USART1->RDR ;
+	}
+	return rx_byte ;
+}
+
 uint8_t rx_byte_my_uart2 ( void )
 {
-	uint8_t b = 0 ;
+	uint8_t rx_byte = 0 ;
 	if ( USART2->ISR & USART_ISR_RXNE_RXFNE )
 	{
-		b = USART2->RDR ;
+		rx_byte = USART2->RDR ;
 	}
-	return b ;
+	return rx_byte ;
+}
+
+void tx_byte_my_uart1 ( uint8_t* tx_byte )
+{
+	if ( USART1->ISR & USART_ISR_TXE_TXFNF )
+	{
+		USART1->TDR = *tx_byte ;
+	}
+}
+
+void tx_byte_my_uart2 ( uint8_t* tx_byte )
+{
+	if ( USART2->ISR & USART_ISR_TXE_TXFNF )
+	{
+		USART2->TDR = *tx_byte ;
+	}
 }
 
 void my_uart1_on ( uint32_t my_sysclock , uint32_t baudrate )
