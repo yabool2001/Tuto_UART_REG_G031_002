@@ -55,10 +55,10 @@ void rx_byte_my_uart1 ( uint8_t* rx_byte )
 	{
 		*rx_byte = USART1->RDR ;
 	}
-	else
+	/*else
 	{
 		__NOP() ;
-	}
+	}*/
 }
 
 void rx_byte_my_uart2 ( uint8_t* rx_byte )
