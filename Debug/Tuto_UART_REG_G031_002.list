@@ -610,7 +610,7 @@ void rx_byte_my_uart1 ( uint8_t* rx_byte )
  800040e:	4013      	ands	r3, r2
  8000410:	d005      	beq.n	800041e <rx_byte_my_uart1+0x1e>
 	{
-		rx_byte[0] = USART1->RDR ;
+		*rx_byte = USART1->RDR ;
  8000412:	4b05      	ldr	r3, [pc, #20]	; (8000428 <rx_byte_my_uart1+0x28>)
  8000414:	6a5b      	ldr	r3, [r3, #36]	; 0x24
  8000416:	b2da      	uxtb	r2, r3
@@ -633,7 +633,7 @@ void rx_byte_my_uart1 ( uint8_t* rx_byte )
  8000428:	40013800 	.word	0x40013800
 
 0800042c <tx_byte_my_uart2>:
-		USART1->TDR = tx_byte[0] ;
+		USART1->TDR = *tx_byte ;
 	}
 }
 
@@ -650,7 +650,7 @@ void tx_byte_my_uart2 ( uint8_t* tx_byte )
  800043a:	4013      	ands	r3, r2
  800043c:	d003      	beq.n	8000446 <tx_byte_my_uart2+0x1a>
 	{
-		USART2->TDR = tx_byte[0] ;
+		USART2->TDR = *tx_byte ;
  800043e:	687b      	ldr	r3, [r7, #4]
  8000440:	781a      	ldrb	r2, [r3, #0]
  8000442:	4b03      	ldr	r3, [pc, #12]	; (8000450 <tx_byte_my_uart2+0x24>)
