@@ -12,8 +12,8 @@ void config_my_tim16 ( uint32_t my_sysclock )
 {
 	RCC->APBENR2		|= RCC_APBENR2_TIM16EN ; 		// Enable TIM16 clock
 	TIM16->PSC 			= (uint16_t) ( ( my_sysclock / 1000 ) - 1 ) ; 	// default: 1 ms = 1000 Hz = ( 16 000 000 Hz / 16 000 )
-	TIM16->EGR			|= TIM_EGR_UG ; 				// Force EGR.UG update
-	TIM16->SR 			&= ~TIM_SR_UIF ;				//Clean UIF Flag
+	TIM16->EGR			= TIM_EGR_UG ; 				// Force EGR.UG update
+	TIM16->SR 			= ~TIM_SR_UIF ;				//Clean UIF Flag
 	TIM16->DIER 		|= TIM_DIER_UIE ; 				// Enable interrupt generation
 	NVIC_SetPriority 	( TIM16_IRQn , 0 ) ;			// Configure interrupt priority
 	NVIC_EnableIRQ 		( TIM16_IRQn ) ;				// Enable interrupt
@@ -28,7 +28,7 @@ void start_my_tim16 ( uint16_t my_tim16_arr )
 
 void stop_my_tim16 ()
 {
-	TIM16->SR 	&= ~TIM_SR_UIF ;		//Clean UIF Flag
+	TIM16->SR 	= ~TIM_SR_UIF ;		//Clean UIF Flag
 	TIM16->CR1 	&= ~TIM_CR1_CEN ;		// Stop counting TIM16
 }
 

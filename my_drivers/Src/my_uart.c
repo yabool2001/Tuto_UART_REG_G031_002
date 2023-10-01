@@ -21,7 +21,8 @@ void my_uart1_init ( void )
 	GPIOA->MODER 	&= ~GPIO_MODER_MODE10_0 ; 	// Set Alternate Function (AF) for USART1_RX
 	GPIOA->AFR[1]	|= GPIO_AFRH_AFSEL9_0 ;  	// ALERT! AFRH is AFR[1]. Choose AF1
 	GPIOA->AFR[1]	|= GPIO_AFRH_AFSEL10_0 ;  	// ALERT! AFRH is AFR[1]. Choose AF1
-	GPIOA->OTYPER	|= GPIO_OTYPER_OT3 ; 		// Choose Open_drain for RX to avoid P-MOS transistors problems and assuming push-pull expected on device
+	GPIOA->OTYPER	|= GPIO_OTYPER_OT10 ; 		// Choose Open_drain for RX to avoid P-MOS transistors problems and assuming push-pull expected on device
+	//GPIOA->PUPDR	|= GPIO_PUPDR_PUPD10_1 ;	// Rx Pull-up
 }
 
 void my_uart2_init ( void )

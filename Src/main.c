@@ -27,7 +27,7 @@
 #endif
 
 #define MY_G031_SYSCLOCK	(uint32_t) 16000000
-#define MY_UART1_BAUDRATE	(uint32_t) 9600
+#define MY_UART1_BAUDRATE	(uint32_t) 115200
 #define MY_UART2_BAUDRATE	(uint32_t) 115200
 
 uint8_t my_tim16_up = 0 ;
@@ -40,17 +40,17 @@ int main(void)
 	my_uart2_init () ;
 	my_uart2_on ( MY_G031_SYSCLOCK , MY_UART2_BAUDRATE ) ;
 	my_uart1_init () ;
-	my_uart1_on ( MY_G031_SYSCLOCK , MY_UART2_BAUDRATE ) ;
+	my_uart1_on ( MY_G031_SYSCLOCK , MY_UART1_BAUDRATE ) ;
 	while ( !( USART2->ISR & USART_ISR_TXE_TXFNF ) )
 	{
 		;
 	}
-	USART2->TDR = '@' ;
+	USART2->TDR = '@' ; // TX test
 	while ( !( USART1->ISR & USART_ISR_TXE_TXFNF ) )
 	{
 		;
 	}
-	USART1->TDR = '@' ;
+	USART1->TDR = '@' ; // TX test
 	//config_my_tim16 ( MY_G031_SYSCLOCK ) ;
 	//start_my_tim16 ( (uint16_t) 1000 ) ;
 	/* Loop forever */
