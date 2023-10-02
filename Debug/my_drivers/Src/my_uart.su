@@ -1,6 +1,6 @@
 ../my_drivers/Src/my_uart.c:17:6:my_uart1_init	8	static
 ../my_drivers/Src/my_uart.c:40:6:my_uart2_init	8	static
-../my_drivers/Src/my_uart.c:52:6:rx_byte_my_uart1	16	static,ignoring_inline_asm
+../my_drivers/Src/my_uart.c:52:6:rx_byte_my_uart1	16	static
 ../my_drivers/Src/my_uart.c:64:6:rx_byte_my_uart2	16	static
 ../my_drivers/Src/my_uart.c:72:6:tx_byte_my_uart1	16	static
 ../my_drivers/Src/my_uart.c:80:6:tx_byte_my_uart2	16	static

@@ -1,4 +1,5 @@
 "./Src/main.o"
+"./Src/parse_nmea.o"
 "./Src/syscalls.o"
 "./Src/sysmem.o"
 "./Startup/startup_stm32g031k8tx.o"
