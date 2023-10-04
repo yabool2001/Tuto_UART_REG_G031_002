@@ -65,7 +65,8 @@ int main(void)
 		{
 			if ( my_nmea_message ( &rx_byte_uart1 , nmea_message , &i_nmea ) == 2 )
 			{
-				tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
+				//tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
+				tx_string_my_uart2 ( nmea_message , i_nmea ) ;
 			}
 			//tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
 			rx_byte_uart1 = 0x00 ;
