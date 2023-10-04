@@ -8,6 +8,6 @@
 #ifndef MY_NMEA_H_
 #define MY_NMEA_H_
 
-
+int my_nmea_message ( uint8_t* , uint8_t* , uint8_t* ) ;
 
 #endif /* MY_NMEA_H_ */

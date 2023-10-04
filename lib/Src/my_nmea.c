@@ -4,21 +4,24 @@
  *  Created on: Oct 2, 2023
  *      Author: mzeml
  */
+#include <stdint.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <my_nmea.h>
+/*
 #define NMEA_BUFFER_SIZE 255
 
-char my_nmea_buffer[NMEA_BUFFER_SIZE];
-uint8_t my_nmea_buffer_index = 0;
+char my_nmea_buffer[NMEA_BUFFER_SIZE] ;
+//uint8_t my_nmea_buffer_index = 0 ;
 
 
 double nmea_to_decimal ( double nmeaCoord ) {
-    int degrees = (int)(nmeaCoord / 100);
-    double minutes = nmeaCoord - degrees * 100;
-    return degrees + minutes / 60;
+    int degrees = (int)(nmeaCoord / 100) ;
+    double minutes = nmeaCoord - degrees * 100 ;
+    return degrees + minutes / 60 ;
 }
+
 
 int main()
 {
@@ -35,9 +38,9 @@ int main()
 
     return 0;
 }
+*/
 
-
-int my_nmea_message ( char* c , char* m , int* i )
+int my_nmea_message ( uint8_t* c , uint8_t* m , uint8_t* i )
 {
     if ( *c == '$' )
     {
@@ -79,7 +82,7 @@ int main ()
         }
     }
 
-    /*
+
     if (parseGNGLL(nmea, &latitude, &longitude) == 0) {
         printf("Szerokość geograficzna: %.4lf\n", latitude);
         printf("Długość geograficzna: %.4lf\n", longitude);
@@ -87,8 +90,7 @@ int main ()
     } else {
         printf("Błąd parsowania wiadomości NMEA.\n");
     }
-    */
+
     return 0;
 }
 */
- */

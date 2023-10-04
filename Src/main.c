@@ -21,6 +21,7 @@
 #include "stm32g031xx.h"
 #include "my_tims.h"
 #include "my_uart.h"
+#include "my_nmea.h"
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
@@ -32,6 +33,8 @@
 
 uint8_t my_tim16_up ;
 uint8_t rx_byte_uart1 ;
+uint8_t nmea_message[250] ;
+uint8_t i_nmea = 0 ;
 
 
 int main(void)
@@ -60,7 +63,11 @@ int main(void)
 		rx_byte_my_uart1 ( &rx_byte_uart1 ) ;
 		if ( rx_byte_uart1 )
 		{
-			tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
+			if ( my_nmea_message ( &rx_byte_uart1 , nmea_message , &i_nmea ) == 2 )
+			{
+				tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
+			}
+			//tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
 			rx_byte_uart1 = 0x00 ;
 		}
 		/*
