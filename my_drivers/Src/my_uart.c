@@ -84,6 +84,17 @@ void tx_byte_my_uart2 ( uint8_t* b )
 		USART2->TDR = *b ;
 	}
 }
+void tx_string_my_uart1 ( uint8_t* s , uint8_t l )
+{
+	uint8_t i = 0 ;
+	while ( i < l )
+	{
+		if ( USART1->ISR & USART_ISR_TXE_TXFNF )
+		{
+			USART1->TDR = s[i++] ;
+		}
+	}
+}
 void tx_string_my_uart2 ( uint8_t* s , uint8_t l )
 {
 	uint8_t i = 0 ;

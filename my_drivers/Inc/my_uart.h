@@ -18,6 +18,7 @@ void rx_byte_my_uart1 ( uint8_t* ) ;
 void rx_byte_my_uart2 ( uint8_t* ) ;
 void tx_byte_my_uart1 ( uint8_t* ) ;
 void tx_byte_my_uart2 ( uint8_t* ) ;
+void tx_string_my_uart1 ( uint8_t* , uint8_t ) ;
 void tx_string_my_uart2 ( uint8_t* , uint8_t ) ;
 
 #endif /* MY_UART_H_ */

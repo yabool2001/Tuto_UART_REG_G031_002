@@ -66,6 +66,17 @@ int my_nmea_message ( uint8_t* c , uint8_t* m , uint8_t* i )
     return -1 ;
 }
 
+uint8_t my_nmea_checksum ( uint8_t* s )
+{
+    uint8_t checksum = 0 ;
+    int i = 1 ; // Start from index 1 to skip the '$' character
+    while ( s[i] != '*' && s[i] != '\0' )
+    {
+        checksum ^= s[i++] ;
+    }
+    return checksum ;
+}
+
 /*
 int main ()
 {

@@ -35,7 +35,7 @@ uint8_t my_tim16_up ;
 uint8_t rx_byte_uart1 ;
 uint8_t nmea_message[250] ;
 uint8_t i_nmea = 0 ;
-
+uint8_t nmea_checksum ;
 
 int main(void)
 {
@@ -66,7 +66,9 @@ int main(void)
 			if ( my_nmea_message ( &rx_byte_uart1 , nmea_message , &i_nmea ) == 2 )
 			{
 				//tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
-				tx_string_my_uart2 ( nmea_message , i_nmea ) ;
+				nmea_checksum = my_nmea_checksum ( nmea_message ) ;
+				tx_byte_my_uart2 ( &nmea_checksum ) ;
+				//tx_string_my_uart2 ( nmea_message , i_nmea ) ;
 			}
 			//tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
 			rx_byte_uart1 = 0x00 ;

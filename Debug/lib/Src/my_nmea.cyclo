@@ -1,1 +1,2 @@
 ../lib/Src/my_nmea.c:43:5:my_nmea_message	9
+../lib/Src/my_nmea.c:69:9:my_nmea_checksum	3
