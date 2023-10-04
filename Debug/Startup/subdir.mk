@@ -16,7 +16,7 @@ S_DEPS += \
 
 # Each subdirectory must supply rules for building sources it contributes
 Startup/%.o: ../Startup/%.s Startup/subdir.mk
-	arm-none-eabi-gcc -mcpu=cortex-m0plus -g3 -DDEBUG -c -I"C:/Users/mzeml/embedded/Tuto_UART_REG_G031_002/CMSIS/Include" -I"C:/Users/mzeml/embedded/Tuto_UART_REG_G031_002/CMSIS/Device/ST/STM32G0xx/Include" -I"C:/Users/mzeml/embedded/Tuto_UART_REG_G031_002/CMSIS/Device/ST/STM32G0xx/Source" -I"C:/Users/mzeml/embedded/Tuto_UART_REG_G031_002/my_drivers/Inc" -I"C:/Users/mzeml/embedded/Tuto_UART_REG_G031_002/my_drivers/Src" -x assembler-with-cpp -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m0plus -g3 -DDEBUG -c -I"C:/Users/mzeml/embedded/Tuto_UART_REG_G031_002/CMSIS/Include" -I"C:/Users/mzeml/embedded/Tuto_UART_REG_G031_002/CMSIS/Device/ST/STM32G0xx/Include" -I"C:/Users/mzeml/embedded/Tuto_UART_REG_G031_002/CMSIS/Device/ST/STM32G0xx/Source" -I"C:/Users/mzeml/embedded/Tuto_UART_REG_G031_002/my_drivers/Inc" -I"C:/Users/mzeml/embedded/Tuto_UART_REG_G031_002/my_drivers/Src" -I"C:/Users/mzeml/embedded/Tuto_UART_REG_G031_002/lib/Inc" -x assembler-with-cpp -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@" "$<"
 
 clean: clean-Startup
 
