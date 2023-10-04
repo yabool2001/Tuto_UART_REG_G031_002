@@ -4,6 +4,6 @@
 ../my_drivers/Src/my_uart.c:64:6:rx_byte_my_uart2	2
 ../my_drivers/Src/my_uart.c:72:6:tx_byte_my_uart1	2
 ../my_drivers/Src/my_uart.c:80:6:tx_byte_my_uart2	2
-../my_drivers/Src/my_uart.c:87:6:tx_string_my_uart2	5
-../my_drivers/Src/my_uart.c:105:6:my_uart1_on	1
-../my_drivers/Src/my_uart.c:126:6:my_uart2_on	1
+../my_drivers/Src/my_uart.c:87:6:tx_string_my_uart2	3
+../my_drivers/Src/my_uart.c:99:6:my_uart1_on	1
+../my_drivers/Src/my_uart.c:120:6:my_uart2_on	1

@@ -88,17 +88,11 @@ void tx_string_my_uart2 ( uint8_t* s , uint8_t l )
 {
 	uint8_t i = 0 ;
 	while ( i < l )
+	{
 		if ( USART2->ISR & USART_ISR_TXE_TXFNF )
 		{
 			USART2->TDR = s[i++] ;
 		}
-	if ( USART2->ISR & USART_ISR_TXE_TXFNF )
-	{
-		USART2->TDR = '\r' ;
-	}
-	if ( USART2->ISR & USART_ISR_TXE_TXFNF )
-	{
-		USART2->TDR = '\n' ;
 	}
 }
 
