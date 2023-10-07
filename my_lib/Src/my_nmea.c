@@ -28,29 +28,6 @@ int parseNMEA(char *nmea, double *latitude, double *longitude) {
     return 0;
 }
 
-int foo() {
-    char nmea[] = "$GNGLL,5216.7071,N,02048.5512,E,210042.000,A,A*4E";
-    double latitude, longitude;
-
-    if (parseNMEA(nmea, &latitude, &longitude) == 0) {
-        //printf("Szerokość geograficzna: %.6lf N\n", latitude);
-        //printf("Długość geograficzna: %.6lf E\n", longitude);
-    } else {
-        //printf("Błąd parsowania danych NMEA.\n");
-    }
-
-    return 0;
-}
-*/
-
-
-/*
-#define NMEA_BUFFER_SIZE 255
-
-char my_nmea_buffer[NMEA_BUFFER_SIZE] ;
-//uint8_t my_nmea_buffer_index = 0 ;
-
-
 double nmea_to_decimal ( double nmeaCoord ) {
     int degrees = (int)(nmeaCoord / 100) ;
     double minutes = nmeaCoord - degrees * 100 ;
@@ -103,7 +80,21 @@ int my_nmea_message ( uint8_t* c , uint8_t* m , uint8_t* i )
 
 uint8_t get_my_nmea_fixed_mode ( uint8_t* m )
 {
-	return m[9] ;
+	return ( ( m[9] - 48 ) > 0 ) ? ( m[9] - 48 ) : 0 ;
+}
+
+double get_my_nmea_pdop ( const char* m )
+{
+	uint8_t p_start = my_find_position ( m , GSA_PDOP_POSITION ) ;
+	uint8_t p_stop = my_find_position ( m , GSA_PDOP_POSITION + 1 ) ;
+	p_start++ ;
+	uint8_t l = p_stop - p_start ;
+	char* pdop_string = (char*) malloc ( ( l +1 ) * sizeof ( char ) ) ;
+	strncpy ( pdop_string , m + p_start , l ) ; // Kopiowanie fragmentu łańcucha
+	pdop_string[l] = '\0';
+	double pdop = my_string2double_conv ( pdop_string ) ;
+	free ( pdop_string ) ;
+	return ( pdop * 100 ) / 100 ; // przed zwróceniem zaokrąglij do 2 miejsc po przecinku
 }
 
 bool is_my_nmea_checksum_ok ( uint8_t* s )
@@ -116,6 +107,8 @@ bool is_my_nmea_checksum_ok ( uint8_t* s )
     //uint8_t* c = strtol ( b , NULL, 16 ) ;
     return ( cs == strtol ( (char*) &s[++i] , NULL, 16 ) ) ? true : false ;
 }
+
+
 
 /*
 int main ()

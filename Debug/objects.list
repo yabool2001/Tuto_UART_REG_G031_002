@@ -4,4 +4,5 @@
 "./Startup/startup_stm32g031k8tx.o"
 "./my_drivers/Src/my_tims.o"
 "./my_drivers/Src/my_uart.o"
+"./my_lib/Src/my_conversions.o"
 "./my_lib/Src/my_nmea.o"

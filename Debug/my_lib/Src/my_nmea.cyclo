@@ -1,3 +1,4 @@
-../my_lib/Src/my_nmea.c:78:5:my_nmea_message	9
-../my_lib/Src/my_nmea.c:104:9:get_my_nmea_fixed_mode	1
-../my_lib/Src/my_nmea.c:109:6:is_my_nmea_checksum_ok	4
+../my_lib/Src/my_nmea.c:55:5:my_nmea_message	9
+../my_lib/Src/my_nmea.c:81:9:get_my_nmea_fixed_mode	2
+../my_lib/Src/my_nmea.c:86:8:get_my_nmea_pdop	1
+../my_lib/Src/my_nmea.c:100:6:is_my_nmea_checksum_ok	4

@@ -5,12 +5,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../my_lib/Src/my_conversions.c \
 ../my_lib/Src/my_nmea.c 
 
 OBJS += \
+./my_lib/Src/my_conversions.o \
 ./my_lib/Src/my_nmea.o 
 
 C_DEPS += \
+./my_lib/Src/my_conversions.d \
 ./my_lib/Src/my_nmea.d 
 
 
@@ -21,7 +24,7 @@ my_lib/Src/%.o my_lib/Src/%.su my_lib/Src/%.cyclo: ../my_lib/Src/%.c my_lib/Src/
 clean: clean-my_lib-2f-Src
 
 clean-my_lib-2f-Src:
-	-$(RM) ./my_lib/Src/my_nmea.cyclo ./my_lib/Src/my_nmea.d ./my_lib/Src/my_nmea.o ./my_lib/Src/my_nmea.su
+	-$(RM) ./my_lib/Src/my_conversions.cyclo ./my_lib/Src/my_conversions.d ./my_lib/Src/my_conversions.o ./my_lib/Src/my_conversions.su ./my_lib/Src/my_nmea.cyclo ./my_lib/Src/my_nmea.d ./my_lib/Src/my_nmea.o ./my_lib/Src/my_nmea.su
 
 .PHONY: clean-my_lib-2f-Src
 
