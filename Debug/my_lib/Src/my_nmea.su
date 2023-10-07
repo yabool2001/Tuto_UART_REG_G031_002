@@ -1,3 +1,3 @@
 ../my_lib/Src/my_nmea.c:78:5:my_nmea_message	24	static
-../my_lib/Src/my_nmea.c:104:10:nmea_format	16	static
+../my_lib/Src/my_nmea.c:104:9:get_my_nmea_fixed_mode	16	static
 ../my_lib/Src/my_nmea.c:109:6:is_my_nmea_checksum_ok	32	static

@@ -38,8 +38,9 @@ uint8_t rx_byte_uart1 ;
 uint8_t nmea_message[250] ;
 uint8_t i_nmea = 0 ;
 uint8_t nmea_checksum ;
-char* nmea_gngsa_label = "GNGSA" ;
-char* nmea_gngll_label = "GNGLL" ;
+char* 	nmea_gngsa_label = "GNGSA" ;
+char* 	nmea_gngll_label = "GNGLL" ;
+uint8_t nmea_fixed_mode ;
 
 int main(void)
 {
@@ -72,8 +73,8 @@ int main(void)
 				//tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
 				if ( is_my_nmea_checksum_ok ( nmea_message ) )
 				{
-					if ( strstr ( (char*) nmea_message , nmea_gngll_label ) )
-						__NOP();
+					if ( strstr ( (char*) nmea_message , nmea_gngsa_label ) )
+						nmea_fixed_mode = get_my_nmea_fixed_mode ( nmea_message ) ;
 				}
 				//tx_byte_my_uart2 ( &nmea_checksum ) ;
 				//tx_string_my_uart2 ( nmea_message , i_nmea ) ;

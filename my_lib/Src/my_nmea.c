@@ -101,9 +101,9 @@ int my_nmea_message ( uint8_t* c , uint8_t* m , uint8_t* i )
     return -1 ;
 }
 
-uint8_t* nmea_format ( uint8_t* m )
+uint8_t get_my_nmea_fixed_mode ( uint8_t* m )
 {
-
+	return m[9] ;
 }
 
 bool is_my_nmea_checksum_ok ( uint8_t* s )
