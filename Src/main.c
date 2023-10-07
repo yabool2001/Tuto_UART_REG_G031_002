@@ -82,9 +82,9 @@ int main(void)
 				{
 					if ( strstr ( (char*) nmea_message_t , nmea_gngsa_label ) )
 					{
-						//nmea_fixed_mode = get_my_nmea_fixed_mode ( nmea_message ) ;
+						nmea_fixed_mode = get_my_nmea_fixed_mode ( nmea_message_t ) ;
 						nmea_fixed_pdop = get_my_nmea_pdop ( (char*) nmea_message_t ) ;
-						if ( nmea_fixed_mode == NMEA_3D_FIX )
+						if ( nmea_fixed_mode == NMEA_3D_FIX && nmea_fixed_pdop < 2 )
 						{
 							__NOP () ;
 						}
