@@ -4,11 +4,8 @@
  *  Created on: Oct 2, 2023
  *      Author: mzeml
  */
-#include <stdint.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <my_nmea.h>
+
+#include "my_nmea.h"
 
 /*
 // Funkcja do przekształcania ciągu znaków NMEA na współrzędne
@@ -104,15 +101,20 @@ int my_nmea_message ( uint8_t* c , uint8_t* m , uint8_t* i )
     return -1 ;
 }
 
-uint8_t my_nmea_checksum ( uint8_t* s )
+uint8_t* nmea_format ( uint8_t* m )
 {
-    uint8_t checksum = 0 ;
-    int i = 1 ; // Start from index 1 to skip the '$' character
-    while ( s[i] != '*' && s[i] != '\0' )
-    {
-        checksum ^= s[i++] ;
-    }
-    return checksum ;
+
+}
+
+bool is_my_nmea_checksum_ok ( uint8_t* s )
+{
+    uint8_t cs = 0 ;
+    uint8_t i = 1 ; // Start from index 1 to skip the '$' character
+    while ( s[i] != '*' && s[i] != '\0' && i != 0 )
+        cs ^= s[i++] ;
+    //uint8_t* b = &s[++i] ;
+    //uint8_t* c = strtol ( b , NULL, 16 ) ;
+    return ( cs == strtol ( (char*) &s[++i] , NULL, 16 ) ) ? true : false ;
 }
 
 /*

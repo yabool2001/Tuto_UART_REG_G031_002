@@ -18,10 +18,12 @@
  */
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "stm32g031xx.h"
 #include "my_tims.h"
 #include "my_uart.h"
-#include "my_nmea.h"
+
+#include "../my_lib/Inc/my_nmea.h"
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
@@ -36,6 +38,8 @@ uint8_t rx_byte_uart1 ;
 uint8_t nmea_message[250] ;
 uint8_t i_nmea = 0 ;
 uint8_t nmea_checksum ;
+char* nmea_gngsa_label = "GNGSA" ;
+char* nmea_gngll_label = "GNGLL" ;
 
 int main(void)
 {
@@ -66,8 +70,12 @@ int main(void)
 			if ( my_nmea_message ( &rx_byte_uart1 , nmea_message , &i_nmea ) == 2 )
 			{
 				//tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
-				nmea_checksum = my_nmea_checksum ( nmea_message ) ;
-				tx_byte_my_uart2 ( &nmea_checksum ) ;
+				if ( is_my_nmea_checksum_ok ( nmea_message ) )
+				{
+					if ( strstr ( (char*) nmea_message , nmea_gngll_label ) )
+						__NOP();
+				}
+				//tx_byte_my_uart2 ( &nmea_checksum ) ;
 				//tx_string_my_uart2 ( nmea_message , i_nmea ) ;
 			}
 			//tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
