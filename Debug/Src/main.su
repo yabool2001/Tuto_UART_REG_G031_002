@@ -1,2 +1,2 @@
 ../Src/main.c:54:5:main	8	static,ignoring_inline_asm
-../Src/main.c:113:6:TIM16_IRQHandler	8	static
+../Src/main.c:127:6:TIM16_IRQHandler	8	static

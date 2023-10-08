@@ -88,8 +88,22 @@ int main(void)
 						nmea_fixed_pdop_d = get_my_nmea_pdop_d ( (char*) nmea_message ) ;
 						if ( nmea_fixed_mode_s == NMEA_3D_FIX && nmea_fixed_pdop_d < 2 )
 						{
-							get_my_nmea_coordinates_s ( (char*) nmea_message , nmea_latitude , nmea_longitude ) ;
-							__NOP () ;
+							// !!!!!!!!!!!!!!!!!!!!!!!!!!  i tutaj nie ma while żeby odbierać w kółko
+							rx_byte_my_uart1 ( &rx_byte_uart1 ) ;
+							if ( rx_byte_uart1 )
+							{
+								if ( my_nmea_message ( &rx_byte_uart1 , nmea_message , &i_nmea ) == 2 )
+								{
+									if ( is_my_nmea_checksum_ok ( (char*) nmea_message ) )
+									{
+										if ( strstr ( (char*) nmea_message , nmea_gngll_label ) )
+										{
+											get_my_nmea_coordinates_s ( (char*) nmea_message , nmea_latitude , nmea_longitude ) ;
+											__NOP () ;
+										}
+									}
+								}
+							}
 						}
 					}
 				}
