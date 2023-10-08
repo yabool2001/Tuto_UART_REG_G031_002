@@ -41,15 +41,14 @@ const char get_my_nmea_fixed_mode_s ( const char* m )
 
 double get_my_nmea_pdop_d ( const char* m )
 {
-	uint8_t p_start = my_find_position ( m , GSA_PDOP_POSITION ) ;
-	uint8_t p_stop = my_find_position ( m , GSA_PDOP_POSITION + 1 ) ;
-	p_start++ ;
-	uint8_t l = p_stop - p_start ;
-	char* pdop_string = (char*) malloc ( ( l +1 ) * sizeof ( char ) ) ;
-	strncpy ( pdop_string , m + p_start , l ) ; // Kopiowanie fragmentu łańcucha
-	pdop_string[l] = '\0';
-	double pdop = my_string2double_conv ( pdop_string ) ;
-	free ( pdop_string ) ;
+	uint8_t pdop_position = my_find_char_position ( m , NMEA_DELIMETER , GSA_PDOP_POSITION ) + 1 ;
+	uint8_t pdop_length = my_find_char_position ( m , NMEA_DELIMETER , GSA_PDOP_POSITION + 1 ) - pdop_position ;
+
+	char* pdop_s = (char*) malloc ( ( pdop_length +1 ) * sizeof ( char ) ) ;
+	strncpy ( pdop_s , m + pdop_position , pdop_length ) ; // Kopiowanie fragmentu łańcucha
+	pdop_s[pdop_length] = '\0';
+	double pdop = my_string2double_conv ( pdop_s ) ;
+	free ( pdop_s ) ;
 	return pdop ; // przed zwróceniem zaokrąglij do 2 miejsc po przecinku
 }
 
@@ -71,5 +70,45 @@ double nmea2decimal ( const char *coord , char dir )
     min = deg / 100 ;
     deg = (int) min ;
     min = min - deg ;
-    return deg + min / 0.6 * ( ( dir == 'S' || dir == 'W' ) ? -1 : 1 ) ;
+    //double c = ( deg + min / 0.6 ) * ( ( dir == 'S' || dir == 'W' ) ? -1 : 1 ) ;
+    return ( deg + min / 0.6 ) * ( ( dir == 'S' || dir == 'W' ) ? -1 : 1 ) ;
 }
+
+void get_my_nmea_coordinates_s ( const char* m , char* latitude , char* longitude )
+{
+	char direction ;
+
+	//Latitude part
+	uint8_t coordinate_position = my_find_char_position ( m , NMEA_DELIMETER , GLL_LATITUDE_POSITION ) + 1 ;
+	uint8_t coordinate_length = my_find_char_position ( m , NMEA_DELIMETER , GLL_LATITUDE_POSITION + 1 ) - coordinate_position ;
+
+	char* latitude_s = (char*) malloc ( ( coordinate_length +1 ) * sizeof ( char ) ) ;
+	strncpy ( latitude_s , m + coordinate_position , coordinate_length ) ; // Kopiowanie fragmentu łańcucha
+	latitude_s[coordinate_length] = '\0';
+	direction = m[coordinate_position + coordinate_length + 1] ;
+	double latitude_d = nmea2decimal ( latitude_s , direction ) ;
+	free ( latitude_s ) ;
+	latitude_d = round ( latitude_d * 1e6 ) / 1e6 ;
+	snprintf ( latitude , 12 , "%.6lf" , latitude_d ) ;
+
+	//Longitude part
+	coordinate_position = my_find_char_position ( m , NMEA_DELIMETER , GLL_LATITUDE_POSITION + 2) + 1 ;
+	//coordinate_length = my_find_char_position ( m , NMEA_DELIMETER , GLL_LATITUDE_POSITION + 1 ) - coordinate_position ;
+	coordinate_length = my_find_char_position ( m , NMEA_DELIMETER , GLL_LATITUDE_POSITION + 2 + 1 ) - coordinate_position ;
+
+	char* longitude_s = (char*) malloc ( ( coordinate_length +1 ) * sizeof ( char ) ) ;
+	strncpy ( longitude_s , m + coordinate_position , coordinate_length ) ; // Kopiowanie fragmentu łańcucha
+	longitude_s[coordinate_length] = '\0';
+	direction = m[coordinate_position + coordinate_length + 1] ;
+	double longitude_d = nmea2decimal ( longitude_s , direction ) ;
+	free ( longitude_s ) ;
+	longitude_d = round ( longitude_d * 1e6 ) / 1e6 ;
+	snprintf ( longitude , 12 , "%.6lf" , longitude_d ) ;
+}
+
+/*
+void get_my_nmea_longitude_s ( const char* m , char* coor )
+{
+	__NOP () ;
+}
+*/

@@ -35,13 +35,12 @@
 #define NMEA_3D_FIX			'3'
 
 char* nmea_message_t = "$GNGSA,A,3,12,19,32,06,11,28,,,,,,,1.69,1.42,0.91,1*06" ;
-char* nmea_message_p = "$GNGLL,5216.7071,N,02048.5512,E,210042.000,A,A*4E" ;
+//char* nmea_message_p = "$GNGLL,5216.7071,N,02048.5512,E,210042.000,A,A*4E" ;
+char*   nmea_message_p = "$GNGLL,6844.1400,S,17626.2543,W,210042.000,A,A*4E" ;
 
 uint8_t my_tim16_up ;
 uint8_t rx_byte_uart1 ;
 uint8_t nmea_message[250] ;
-uint8_t nmea_latitude[12] ; // 11 + '\0'
-uint8_t nmea_longitude[13] ; // 12 + '\0'
 uint8_t i_nmea = 0 ;
 uint8_t nmea_checksum ;
 uint8_t nmea_3d_fix = 3 ;
@@ -49,6 +48,8 @@ char* 	nmea_gngsa_label = "GNGSA" ;
 char* 	nmea_gngll_label = "GNGLL" ;
 char	nmea_fixed_mode_s ;
 double 	nmea_fixed_pdop_d = 0.0 ;
+char 	nmea_latitude[12] ; // 10 + ew. znak minus + '\0'
+char 	nmea_longitude[12] ; // 10 + ew. znak minus + '\0'
 
 int main(void)
 {
@@ -87,6 +88,7 @@ int main(void)
 						nmea_fixed_pdop_d = get_my_nmea_pdop_d ( nmea_message_t ) ;
 						if ( nmea_fixed_mode_s == NMEA_3D_FIX && nmea_fixed_pdop_d < 2 )
 						{
+							get_my_nmea_coordinates_s ( nmea_message_p , nmea_latitude , nmea_longitude ) ;
 							__NOP () ;
 						}
 					}

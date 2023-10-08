@@ -14,6 +14,6 @@
 
 double my_string2double_conv ( const char* ) ;
 float my_string2float_conv ( const char* ) ;
-uint8_t my_find_position ( const char* , uint8_t ) ;
+uint8_t my_find_char_position ( const char* , const char , uint8_t ) ;
 
 #endif /* MY_CONVERSIONS_H_ */
