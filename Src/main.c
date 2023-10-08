@@ -34,9 +34,9 @@
 #define MY_UART2_BAUDRATE	(uint32_t) 115200
 #define NMEA_3D_FIX			'3'
 
-char* nmea_message_t = "$GNGSA,A,3,12,19,32,06,11,28,,,,,,,1.69,1.42,0.91,1*06" ;
+//char* nmea_message_t = "$GNGSA,A,3,12,19,32,06,11,28,,,,,,,1.69,1.42,0.91,1*06" ;
 //char* nmea_message_p = "$GNGLL,5216.7071,N,02048.5512,E,210042.000,A,A*4E" ;
-char*   nmea_message_p = "$GNGLL,6844.1400,S,17626.2543,W,210042.000,A,A*4E" ;
+//char*   nmea_message_p = "$GNGLL,6844.1400,S,17626.2543,W,210042.000,A,A*4E" ;
 
 uint8_t my_tim16_up ;
 uint8_t rx_byte_uart1 ;
@@ -74,31 +74,31 @@ int main(void)
 	/* Loop forever */
 	while ( 1 )
 	{
-		/*rx_byte_my_uart1 ( &rx_byte_uart1 ) ;
+		rx_byte_my_uart1 ( &rx_byte_uart1 ) ;
 		if ( rx_byte_uart1 )
 		{
 			if ( my_nmea_message ( &rx_byte_uart1 , nmea_message , &i_nmea ) == 2 )
-			{*/
+			{
 				//tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
-				if ( is_my_nmea_checksum_ok ( nmea_message_t ) )
+				if ( is_my_nmea_checksum_ok ( (char*) nmea_message ) )
 				{
-					if ( strstr ( (char*) nmea_message_t , nmea_gngsa_label ) )
+					if ( strstr ( (char*) nmea_message , nmea_gngsa_label ) )
 					{
-						nmea_fixed_mode_s = get_my_nmea_fixed_mode_s ( nmea_message_t ) ;
-						nmea_fixed_pdop_d = get_my_nmea_pdop_d ( nmea_message_t ) ;
+						nmea_fixed_mode_s = get_my_nmea_fixed_mode_s ( (char*) nmea_message ) ;
+						nmea_fixed_pdop_d = get_my_nmea_pdop_d ( (char*) nmea_message ) ;
 						if ( nmea_fixed_mode_s == NMEA_3D_FIX && nmea_fixed_pdop_d < 2 )
 						{
-							get_my_nmea_coordinates_s ( nmea_message_p , nmea_latitude , nmea_longitude ) ;
+							get_my_nmea_coordinates_s ( (char*) nmea_message , nmea_latitude , nmea_longitude ) ;
 							__NOP () ;
 						}
 					}
 				}
 				//tx_byte_my_uart2 ( &nmea_checksum ) ;
 				//tx_string_my_uart2 ( nmea_message , i_nmea ) ;
-			/*}
+			}
 			//tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
 			rx_byte_uart1 = 0x00 ;
-		}*/
+		}
 		/*
 		tx_byte_to_uart2 = rx_byte_from_uart2 ? rx_byte_from_uart2 : tx_byte_to_uart2 ;
 		if ( my_tim16_up == 1)

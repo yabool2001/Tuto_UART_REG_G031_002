@@ -62,18 +62,36 @@ bool is_my_nmea_checksum_ok ( const char* s )
     //uint8_t* c = strtol ( b , NULL, 16 ) ;
     return ( cs == strtol ( (char*) &s[++i] , NULL, 16 ) ) ? true : false ;
 }
-
 double nmea2decimal ( const char *coord , char dir )
 {
     double deg , min ;
     sscanf ( coord , "%lf" , &deg ) ;
     min = deg / 100 ;
     deg = (int) min ;
-    min = min - deg ;
-    //double c = ( deg + min / 0.6 ) * ( ( dir == 'S' || dir == 'W' ) ? -1 : 1 ) ;
-    return ( deg + min / 0.6 ) * ( ( dir == 'S' || dir == 'W' ) ? -1 : 1 ) ;
+    min = ( min - deg ) * 100 ;
+    min = min / 60 ;
+    //double c = deg + min ;
+    if ( dir == 'S' || dir == 'W' )
+    	return ( deg + min ) * -1 ;
+    else
+    	return deg + min ;
 }
-
+/*
+double nmea2decimal ( const char *coord , char dir )
+{
+    double deg , min ;
+    sscanf ( coord , "%lf" , &deg ) ;
+    min = deg / 100 ;
+    deg = (int) min ;
+    min = ( min - deg ) / 0.6 ;
+    double c = deg + min ;
+    if ( dir == 'S' || dir == 'W' )
+    	c = c * -1 ;
+    return c ;
+    //double c = ( deg + min / 0.6 ) * ( ( dir == 'S' || dir == 'W' ) ? -1 : 1 ) ;
+    //return ( deg + min / 0.6 ) * ( ( dir == 'S' || dir == 'W' ) ? -1 : 1 ) ;
+}
+*/
 void get_my_nmea_coordinates_s ( const char* m , char* latitude , char* longitude )
 {
 	char direction ;
