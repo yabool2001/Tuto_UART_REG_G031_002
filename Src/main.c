@@ -72,7 +72,8 @@ int main(void)
 	//config_my_tim16 ( MY_G031_SYSCLOCK ) ;
 	//start_my_tim16 ( (uint16_t) 1000 ) ;
 	/* Loop forever */
-	while ( 1 )
+	bool continue_fix_loop = true ;
+	while ( continue_fix_loop )
 	{
 		rx_byte_my_uart1 ( &rx_byte_uart1 ) ;
 		if ( rx_byte_uart1 )
@@ -86,24 +87,9 @@ int main(void)
 					{
 						nmea_fixed_mode_s = get_my_nmea_fixed_mode_s ( (char*) nmea_message ) ;
 						nmea_fixed_pdop_d = get_my_nmea_pdop_d ( (char*) nmea_message ) ;
-						if ( nmea_fixed_mode_s == NMEA_3D_FIX && nmea_fixed_pdop_d < 2 )
+						if ( nmea_fixed_mode_s == NMEA_3D_FIX && nmea_fixed_pdop_d < 5 )
 						{
-							// !!!!!!!!!!!!!!!!!!!!!!!!!!  i tutaj nie ma while żeby odbierać w kółko
-							rx_byte_my_uart1 ( &rx_byte_uart1 ) ;
-							if ( rx_byte_uart1 )
-							{
-								if ( my_nmea_message ( &rx_byte_uart1 , nmea_message , &i_nmea ) == 2 )
-								{
-									if ( is_my_nmea_checksum_ok ( (char*) nmea_message ) )
-									{
-										if ( strstr ( (char*) nmea_message , nmea_gngll_label ) )
-										{
-											get_my_nmea_coordinates_s ( (char*) nmea_message , nmea_latitude , nmea_longitude ) ;
-											__NOP () ;
-										}
-									}
-								}
-							}
+							continue_fix_loop = false ;
 						}
 					}
 				}
@@ -112,6 +98,34 @@ int main(void)
 			}
 			//tx_byte_my_uart2 ( &rx_byte_uart1 ) ;
 			rx_byte_uart1 = 0x00 ;
+		}
+		bool continue_coordinates_loop = true ;
+		if ( continue_coordinates_loop )
+		{
+			while ( 1 )
+			{
+				rx_byte_my_uart1 ( &rx_byte_uart1 ) ;
+				if ( rx_byte_uart1 )
+				{
+					if ( my_nmea_message ( &rx_byte_uart1 , nmea_message , &i_nmea ) == 2 )
+					{
+						if ( is_my_nmea_checksum_ok ( (char*) nmea_message ) )
+						{
+							if ( strstr ( (char*) nmea_message , nmea_gngll_label ) )
+							{
+								get_my_nmea_coordinates_s ( (char*) nmea_message , nmea_latitude , nmea_longitude ) ;
+								continue_coordinates_loop = false ;
+								while ( !( USART2->ISR & USART_ISR_TXE_TXFNF ) )
+								{
+									;
+								}
+								USART2->TDR = 'C' ; // TX test
+							}
+						}
+					}
+					rx_byte_uart1 = 0x00 ;
+				}
+			}
 		}
 		/*
 		tx_byte_to_uart2 = rx_byte_from_uart2 ? rx_byte_from_uart2 : tx_byte_to_uart2 ;

@@ -68,8 +68,8 @@ double nmea2decimal ( const char *coord , char dir )
     sscanf ( coord , "%lf" , &deg ) ;
     min = deg / 100 ;
     deg = (int) min ;
-    min = ( min - deg ) * 100 ;
-    min = min / 60 ;
+    min = ( min - deg ) * 10 ;
+    min = min / 6 ;
     //double c = deg + min ;
     if ( dir == 'S' || dir == 'W' )
     	return ( deg + min ) * -1 ;
